@@ -1,8 +1,8 @@
-# GitHub Action for Eleventy
+# GitHub Action for eleventy-webpack
 
-Use this action to build your static website with [Eleventy](https://www.11ty.io/).
+Use this action to build your static website with [eleventy-webpack](https://github.com/clenemt/eleventy-webpack). If you're using the basic 11ty build, use the [Eleventy Action](https://github.com/marketplace/actions/eleventy-action) this repo is forked from.
 
-To use it, create a `.github/workflows/eleventy_build.yml` file which [uses this repository](https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idsteps) as an action.
+To use it, create a `.github/workflows/eleventy_build.yml` file which uses this repository as an action.
 
 Here's an example which builds the site with this action, then deploys to GitHub Pages with [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages):
 
@@ -14,30 +14,12 @@ jobs:
   build_deploy:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
       - name: Build
-        uses: TartanLlama/actions-eleventy@v1.1
+        uses: peterlarkin/actions-eleventy@v2
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v1.1.0
-        env:
-          PUBLISH_DIR: _site 
-          PUBLISH_BRANCH: gh-pages
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-```
-
-This action accepts a couple of optional inputs:
-
-| Input Name             | Required? | Default | Description                                                            |
-| ---------------------- | :-------: | :-----: | ---------------------------------------------------------------------- |
-| `args`                 |    No     |  `""`   | Arguments to pass to the Eleventy invocation                           |
-| `install_dependencies` |    No     | `false` | If set to `true`, `npm install` will be run before Eleventy is invoked |
-
-For example:
-
-```yaml
-- name: Build
-  uses: TartanLlama/actions-eleventy@v1.1
-  with:
-    args: --output _dist
-    install_dependencies: true
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: _site
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
